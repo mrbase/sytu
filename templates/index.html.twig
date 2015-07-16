@@ -1,0 +1,68 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+    <button id="menu-toggle" class="menu-toggle"><span>Menu</span></button>
+    <div id="theSidebar" class="sidebar">
+        <button class="close-button fa fa-fw fa-close"></button>
+        {#<h1>Play(er)</h1>#}
+        <iframe src="" width="268" height="380" frameborder="0" allowtransparency="true" class="off"></iframe>
+    </div>
+    <div id="theGrid" class="main">
+        <section class="grid">
+            <footer class="page-meta">
+                {#<span>Load more...</span>#}
+            </footer>
+        </section>
+        <section class="content">
+            <div class="scroll-wrap"></div>
+            <button class="close-button"><i class="fa fa-close"></i><span>Close</span></button>
+        </section>
+    </div>
+
+    <script type="text/template" class="template" id="grid-tpl-item">
+        <% _.each( inp.items, function( item ){ %>
+        <a class="grid__item" href="#" data-list-id="<%= item.owner.id+'/'+item.id %>">
+            <h2 class="title title--preview"><%= item.name %></h2>
+            <div class="loader"></div>
+            <span class="category">Collaborative: <%= (item.collaborative ? 'yeah' : 'nope') %></span>
+            <div class="meta meta--preview">
+                <img class="meta__avatar" src="<%= item.images[0].url %>" alt="" />
+                <span class="meta__date"><i class="fa fa-users"></i> <%= item.owner.id %></span>
+                <span class="meta__reading-time"><i class="fa fa-music"></i> <%= item.tracks.total %> tracks</span>
+            </div>
+        </a>
+        <% }); %>
+    </script>
+
+    <script type="text/template" class="template" id="view-tpl-item">
+        <article class="content__item">
+            <h2 class="title title--full"><%= inp.name %></h2>
+            <div class="meta meta--full">
+                <img class="meta__avatar" src="<%= inp.images[0].url %>" alt="" />
+                <span class="meta__author"><a href="<%= inp.owner.external_urls.spotify %>"><%= inp.owner.id %></a></span>
+                <span class="meta__date"><i class="fa fa-users"></i> <%= inp.followers.total %> followers</span>
+                <span class="meta__reading-time js-play" data-play-uri="<%= inp.uri %>"><i class="fa fa-play"></i> Play</span>
+            </div>
+        <% if (inp.description) { %>
+            <p><%= inp.description %></p>
+        <% } %>
+
+            <ul>
+            <% _.each( inp.tracks.items, function(item) { %>
+                <li>
+                    <a href="<%= item.track.external_urls.spotify %>"><%= item.track.name %></a>
+                    by
+                    <a href="<%= item.track.artists[0].external_urls.spotify %>" alt="<%= item.track.artists[0].name %> on spotify"><%= item.track.artists[0].name %></a>
+
+                    <span class="options">
+                        <i class="fa fa-play js-play" title="Play track" data-play-uri="<%= item.track.uri %>"></i>
+                        <i class="fa fa-list" title="Add track to Youtube playlist"></i>
+                    </span>
+                </li>
+            <% }); %>
+            </ul>
+        </article>
+    </script>
+
+
+{% endblock %}
