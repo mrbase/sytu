@@ -229,9 +229,14 @@
     event.preventDefault();
 
     var $player = $('iframe');
+    var $wrapper = $player.closest('div');
+
     $player.attr('src', 'https://embed.spotify.com/?uri='+$(this).data('playUri'));
-    $player.removeClass('off');
+    $wrapper.removeClass('off');
   });
 
-
+  $(document).on('click', '.js-close', function() {
+    $(this).closest('.js-close-container').addClass('off');
+    $('iframe').attr('src', 'about:blank');
+  });
 })();

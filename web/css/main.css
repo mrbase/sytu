@@ -819,8 +819,17 @@ li:hover .options {
     display: inline-block;
 }
 li .options i {
-    font-size: 0.5em;
     cursor: pointer;
+    font-size: 0.5em;
+}
+.js-close-container {
+    text-align: right;
+}
+.js-close {
+    cursor: pointer;
+}
+.js-close:hover {
+    font-weight: bold;
 }
 
 /* Viewport sizes based on column number and sidebar */
