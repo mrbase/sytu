@@ -20,7 +20,10 @@ $app->register(new ServiceControllerServiceProvider());
 $app->register(new TwigServiceProvider());
 $app->register(new HttpFragmentServiceProvider());
 $app->register(new SessionServiceProvider());
-$app->register(new Sorien\Provider\PimpleDumpProvider());
+
+if (true === $app['debug']) {
+    $app->register(new Sorien\Provider\PimpleDumpProvider());
+}
 
 $app->register(new SpotifyServiceProvider());
 
